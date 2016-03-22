@@ -1,0 +1,39 @@
+.tipo {
+  float: inline-block;
+  width: 40%;
+  background-color: #999;
+  text-align: center; }
+
+.indicador {
+  text-align: right; }
+
+.stats {
+  width: 30%;
+  float: left;
+  background-color: #999; }
+
+.baseStats {
+  width: 200px; }
+
+.row {
+  width: 350px;
+  height: 2em; }
+
+.ind {
+  width: 2em;
+  float: right; }
+
+.ingreso {
+  float: right;
+  width: 50%; }
+
+.etiqueta {
+  width: 125px;
+  float: left; }
+
+.listas {
+  float: inline-block;
+  width: 40%;
+  background-color: #999; }
+
+/*# sourceMappingURL=estilos.css.map */

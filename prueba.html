@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="CSS/estilos.css"></link>
+  <title>Calculador de Da&ntilde;o</title>
+</head>
+<body>
+  <!-- Primer Pokemon -->
+  <div class="pokemon">
+    <div class="listas">
+      <select id="nombre" onchange="seleccionarPkmn('nombre'), actualizarStats()">
+        <option value="scizor">Scizor</option>
+        <option value="scizorMega">Mega-Scizor</option>
+        <option value="vaporeon">Vaporeon</option>
+        <option value="blaziken">Blaziken</option>
+        <option value="garchomp">Garchomp</option>
+        <option value="garchompMega">Mega-Garchomp</option>
+        <option value="alakazamMega">Mega-Alakazam</option>
+      </select>
+      <select id="naturaleza" onblur="actualizarStats()" onchange="actualizarStats()">
+        <option value="lonely">Lonely</option>
+        <option value="brave">Brave</option>
+        <option value="adamant">Adamant</option>
+        <option value="naughty">Naughty</option>
+        <option value="bold">Bold</option>
+        <option value="relaxed">Relaxed</option>
+        <option value="impish">Impish</option>
+        <option value="lax">Lax</option>
+        <option value="modest">Modest</option>
+        <option value="mild">Mild</option>
+        <option value="quiet">Quiet</option>
+        <option value="rash">Rash</option>
+        <option value="calm">Calm</option>
+        <option value="gentle">Gentle</option>
+        <option value="sassy">Sassy</option>
+        <option value="careful">Careful</option>
+        <option value="timid">Timid</option>
+        <option value="hasty">Hasty</option>
+        <option value="naive">Naive</option>
+        <option value="jolly">Jolly</option>
+        <option value="neutra">Neutra</option>
+      </select>
+      <input id="nivel" type="number" min="1" max="100" value="100" onblur="nivelMax('nivel'),
+      actualizarStats()" onchange="actualizarStats()"/>
+    </div>
+    <div class="tipo">
+      <label>Type: </label>
+      <label id="typeP"></label>
+      <br />
+      <label id="typeS"></label>
+    </div>
+    <div class="baseStats stats">
+      <div class="row">
+        <label class="indicador">HP: </label>
+        <label id="bHP">70</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Att: </label>
+        <label id="bAtt">130</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Def: </label>
+        <label id="bDef">100</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Sp. Att: </label>
+        <label id="bSatt">55</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Sp. Def: </label>
+        <label id="bSdef">80</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Spd: </label>
+        <label id="bSpd">65</label>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="row">
+        <label class="etiqueta">HP iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivHP">0</label>
+          <input class="ingreso" id="ivHP-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivHP-form', 'ivHP'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Attack iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivAtt">0</label>
+          <input class="ingreso" id="ivAtt-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivAtt-form', 'ivAtt'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Defense iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivDef">0</label>
+          <input class="ingreso" id="ivDef-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivDef-form', 'ivDef'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Sp. Attack iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSatt">0</label>
+          <input class="ingreso" id="ivSatt-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSatt-form', 'ivSatt'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Sp. Defense iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSdef">0</label>
+          <input class="ingreso" id="ivSdef-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSdef-form', 'ivSdef'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Speed iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSpd">0</label>
+          <input class="ingreso" id="ivSpd-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSpd-form', 'ivSpd'), actualizarStats()"/>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="row">
+        <label>HP ev's</label>
+        <input class="ingreso" id="evHP-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evHP-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Attack ev's</label>
+        <input class="ingreso" id="evAtt-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evAtt-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Defense ev's</label>
+        <input class="ingreso" id="evDef-form" type="number" min="0" max="255" step="1" value="0"
+         onblur="evMax('evDef-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+         'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Sp. Attack ev's</label>
+        <input class="ingreso" id="evSatt-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSatt-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Sp. Defense ev's</label>
+        <input class="ingreso" id="evSdef-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSdef-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Speed ev's</label>
+        <input class="ingreso" id="evSpd-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSpd-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>EV's left: </label>
+        <label id="totalEV">510</label>
+      </div>
+    </div>
+    <div class="stats">
+      <label class="row">Final Stats</label>
+      <div class="row">
+        <label>HP:</label>
+        <label class="ind" id="fHP"></label>
+      </div>
+      <div class="row">
+        <label>Attack:</label>
+        <label class="ind" id="fAtt"></label>
+      </div>
+      <div class="row">
+        <label>Defense:</label>
+        <label class="ind" id="fDef"></label>
+      </div>
+      <div class="row">
+        <label>Sp. Attack:</label>
+        <label class="ind" id="fSatt"></label>
+      </div>
+      <div class="row">
+        <label>Sp. Defense:</label>
+        <label class="ind" id="fSdef"></label>
+      </div>
+      <div class="row">
+        <label>Speed:</label>
+        <label class="ind" id="fSpd"></label>
+      </div>
+    </div>
+    <script src="formulario.js"></script>
+  </div>
+  <!-- Segundo Pokemon -->
+  <div style="width: 100%; background: #000"></div>
+  <div class="pokemon">
+    <div class="listas">
+      <select id="nombre" onchange="seleccionarPkmn('nombre'), actualizarStats()">
+        <option value="scizor">Scizor</option>
+        <option value="scizorMega">Mega-Scizor</option>
+        <option value="vaporeon">Vaporeon</option>
+        <option value="blaziken">Blaziken</option>
+        <option value="garchomp">Garchomp</option>
+        <option value="garchompMega">Mega-Garchomp</option>
+        <option value="alakazamMega">Mega-Alakazam</option>
+      </select>
+      <select id="naturaleza" onblur="actualizarStats()" onchange="actualizarStats()">
+        <option value="lonely">Lonely</option>
+        <option value="brave">Brave</option>
+        <option value="adamant">Adamant</option>
+        <option value="naughty">Naughty</option>
+        <option value="bold">Bold</option>
+        <option value="relaxed">Relaxed</option>
+        <option value="impish">Impish</option>
+        <option value="lax">Lax</option>
+        <option value="modest">Modest</option>
+        <option value="mild">Mild</option>
+        <option value="quiet">Quiet</option>
+        <option value="rash">Rash</option>
+        <option value="calm">Calm</option>
+        <option value="gentle">Gentle</option>
+        <option value="sassy">Sassy</option>
+        <option value="careful">Careful</option>
+        <option value="timid">Timid</option>
+        <option value="hasty">Hasty</option>
+        <option value="naive">Naive</option>
+        <option value="jolly">Jolly</option>
+        <option value="neutra">Neutra</option>
+      </select>
+      <input id="nivel" type="number" min="1" max="100" value="100" onblur="nivelMax('nivel'),
+      actualizarStats()" onchange="actualizarStats()"/>
+    </div>
+    <div class="tipo">
+      <label>Type: </label>
+      <label id="typeP"></label>
+      <br />
+      <label id="typeS"></label>
+    </div>
+    <div class="baseStats stats">
+      <div class="row">
+        <label class="indicador">HP: </label>
+        <label id="bHP">70</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Att: </label>
+        <label id="bAtt">130</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Def: </label>
+        <label id="bDef">100</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Sp. Att: </label>
+        <label id="bSatt">55</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Sp. Def: </label>
+        <label id="bSdef">80</label>
+      </div>
+      <div class="row">
+        <label class="indicador">Spd: </label>
+        <label id="bSpd">65</label>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="row">
+        <label class="etiqueta">HP iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivHP">0</label>
+          <input class="ingreso" id="ivHP-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivHP-form', 'ivHP'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Attack iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivAtt">0</label>
+          <input class="ingreso" id="ivAtt-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivAtt-form', 'ivAtt'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Defense iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivDef">0</label>
+          <input class="ingreso" id="ivDef-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivDef-form', 'ivDef'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Sp. Attack iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSatt">0</label>
+          <input class="ingreso" id="ivSatt-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSatt-form', 'ivSatt'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Sp. Defense iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSdef">0</label>
+          <input class="ingreso" id="ivSdef-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSdef-form', 'ivSdef'), actualizarStats()"/>
+        </div>
+      </div>
+      <div class="row">
+        <label class="etiqueta">Speed iv's</label>
+        <div class="ingreso">
+          <label class="ind" id="ivSpd">0</label>
+          <input class="ingreso" id="ivSpd-form" type="range" min="0" max="31" step="1" value="0"
+          onchange="printValue('ivSpd-form', 'ivSpd'), actualizarStats()"/>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="row">
+        <label>HP ev's</label>
+        <input class="ingreso" id="evHP-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evHP-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Attack ev's</label>
+        <input class="ingreso" id="evAtt-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evAtt-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Defense ev's</label>
+        <input class="ingreso" id="evDef-form" type="number" min="0" max="255" step="1" value="0"
+         onblur="evMax('evDef-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+         'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Sp. Attack ev's</label>
+        <input class="ingreso" id="evSatt-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSatt-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Sp. Defense ev's</label>
+        <input class="ingreso" id="evSdef-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSdef-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>Speed ev's</label>
+        <input class="ingreso" id="evSpd-form" type="number" min="0" max="255" step="1" value="0"
+        onblur="evMax('evSpd-form'), totalEV('evHP-form', 'evAtt-form', 'evDef-form',
+        'evSatt-form', 'evSdef-form', 'evSpd-form'), actualizarStats()"/>
+      </div>
+      <div class="row">
+        <label>EV's left: </label>
+        <label id="totalEV">510</label>
+      </div>
+    </div>
+    <div class="stats">
+      <label class="row">Final Stats</label>
+      <div class="row">
+        <label>HP:</label>
+        <label class="ind" id="fHP"></label>
+      </div>
+      <div class="row">
+        <label>Attack:</label>
+        <label class="ind" id="fAtt"></label>
+      </div>
+      <div class="row">
+        <label>Defense:</label>
+        <label class="ind" id="fDef"></label>
+      </div>
+      <div class="row">
+        <label>Sp. Attack:</label>
+        <label class="ind" id="fSatt"></label>
+      </div>
+      <div class="row">
+        <label>Sp. Defense:</label>
+        <label class="ind" id="fSdef"></label>
+      </div>
+      <div class="row">
+        <label>Speed:</label>
+        <label class="ind" id="fSpd"></label>
+      </div>
+    </div>
+    <script src="formulario.js"></script>
+  </div>
+</body>
+</html>
